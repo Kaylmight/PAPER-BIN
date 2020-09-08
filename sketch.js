@@ -5,11 +5,13 @@ const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
 var screenHeight = 660;
-var screenWidth = 800;
+var screenWidth = 1350;
+var binImg, paperImg
 
 function preload()
 {
-	
+	binImg = loadImage('dustbingreen.png')
+	paperImg = loadImage('paper.png')
 }
 
 function setup() {
@@ -39,13 +41,15 @@ function setup() {
 
 function draw() {
   rectMode(CENTER);
-  background(0);
+  background(255);
+
   ground.display();
   binBottom.display();
   binRight.display();
   binLeft.display();
   paper.display();
-
+  image(binImg, 590, 530, 115, 120)
+  
   
   drawSprites();
  
