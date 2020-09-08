@@ -4,21 +4,26 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
+var screenHeight = 660;
+var screenWidth = 800;
+
 function preload()
 {
 	
 }
 
 function setup() {
-	createCanvas(800, 660);
+
+	
+	createCanvas(screenWidth, screenHeight);
 
 
 	engine = Engine.create();
 	world = engine.world;
-	box1 = new Box(width/2, 660, 800, 20, {isStatic:true})
-	box2 = new Box(650, 645, 100, 10)
-	box3 = new Box(695, 600, 10, 100)
-	box4 = new Box(600, 600, 10, 100)
+	ground = new Box(screenWidth/2, screenHeight, screenWidth, 20, {isStatic:true})
+	binBottom = new Box(650, 645, 100, 10)
+	binRight = new Box(695, 600, 10, 100)
+	binLeft = new Box(600, 600, 10, 100)
 	paper = new Paper(100, 100, 20, 20)
 
 	
@@ -35,10 +40,10 @@ function setup() {
 function draw() {
   rectMode(CENTER);
   background(0);
-  box1.display();
-  box2.display();
-  box3.display();
-  box4.display();
+  ground.display();
+  binBottom.display();
+  binRight.display();
+  binLeft.display();
   paper.display();
 
   
@@ -48,8 +53,18 @@ function draw() {
 
 function keyPressed(){
 	if(keyCode === UP_ARROW){
-		Matter.Body.apllyForce(paper.body, paper.body.position, {x:650, y:210})
-		
+
+
+		var targetAngle = Matter.Vector.angle(paper.body.position, {x:650, y:screenHeight-100});
+		var force = 20;
+
+		var forceVector = {
+			x: cos(targetAngle) * force, 
+			y: sin(targetAngle) * force
+		  };
+
+		Matter.Body.applyForce(paper.body, paper.body.position, forceVector)
+		//console.log('Abdulah: ' + paper.body.position.x + " " + paper.body.position.y);
 	}
 }
 
